@@ -16,7 +16,7 @@ public class CollectionManager {
     }
 
     public boolean add(Worker worker) {
-        if (worker.isValid()) {
+        if (worker != null && worker.isValid()) {
             collection.add(worker);
             return true;
         }

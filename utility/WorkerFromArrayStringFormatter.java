@@ -33,14 +33,14 @@ public class WorkerFromArrayStringFormatter {
             if (xString.startsWith("(X=")) {
                 x = Float.parseFloat(xString.substring(3));
             }
-        } catch (RuntimeException _) {
+        } catch (RuntimeException e) {
         }
         try {
             String yString = arr[2].trim().split(";")[1];
             if (yString.startsWith("Y=") && yString.endsWith(")")) {
                 y = Double.parseDouble(yString.substring(2, yString.length() - 1));
             }
-        } catch (RuntimeException _) {
+        } catch (RuntimeException e) {
         }
         coordinates = new Coordinates(x, y);
         try {
@@ -50,7 +50,7 @@ public class WorkerFromArrayStringFormatter {
         }
         try {
             salary = Double.parseDouble(arr[4].trim());
-        } catch (NumberFormatException _) {
+        } catch (NumberFormatException e) {
         }
         String positionString = arr[5].trim();
         for (Position value : Position.values()) {
@@ -93,7 +93,7 @@ public class WorkerFromArrayStringFormatter {
                     }
                 }
                 organization = new Organization(annualTurnover, employeesCount);
-            } catch (RuntimeException _) {
+            } catch (RuntimeException e) {
             }
         }
         return new Worker(id, name, coordinates, creationDate, salary, position, status, organization);

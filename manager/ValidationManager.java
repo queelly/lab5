@@ -37,12 +37,13 @@ public class ValidationManager {
 
     public static boolean isValidObject(Validatable o) {
         if (o != null) {
-            return switch (o) {
-                case Worker worker -> isValidWorker(worker);
-                case Coordinates coordinates -> isValidCoordinates(coordinates);
-                case Organization organization -> isValidOrganization(organization);
-                default -> false;
-            };
+            if (o instanceof Worker) {
+                return isValidWorker((Worker) o);
+            } else if (o instanceof Coordinates) {
+                return isValidCoordinates((Coordinates) o);
+            } else if (o instanceof Organization) {
+                return isValidOrganization((Organization) o);
+            }
         }
         return false;
     }
