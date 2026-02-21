@@ -37,7 +37,8 @@ public class RuntimeManager {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             if (saveBeforeExit) {
                 if (fileManager.writeCollectionToCSV(collectionManager) == 0) {
-                    printerManager.println("Collection was successfully saved to " + fileManager.getFileName());
+                    printerManager.println("Collection was successfully saved to " +
+                            fileManager.getFileName() + " before exit");
                 } else {
                     printerManager.printErr("Collection was not saved before exit.");
                 }
