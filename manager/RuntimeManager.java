@@ -52,7 +52,7 @@ public class RuntimeManager {
                     continue;
                 }
                 String[] args = Arrays.copyOfRange(command, 1, command.length);
-                commandManager.executeCommand(command[0].toLowerCase(), args);
+                commandManager.executeCommand(command[0].toLowerCase(), args, scannerManager);
             } catch (NoSuchElementException e) {
                 return;
             }

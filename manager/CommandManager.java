@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class CommandManager {
 
+    private ScannerManager scannerManager;
     private PrinterManager printerManager = new PrinterManager();
     private HashMap<String, Executable> commands = new HashMap<>();
 
@@ -17,7 +18,7 @@ public class CommandManager {
         return this.commands;
     }
 
-    public void executeCommand(String commandName, String[] args) {
+    public void executeCommand(String commandName, String[] args, ScannerManager scannerManager) {
         Executable command = commands.get(commandName);
         if (command == null) {
             printerManager.printErr("That command doesn't exist!");

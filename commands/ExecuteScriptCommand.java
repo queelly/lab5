@@ -58,7 +58,7 @@ public class ExecuteScriptCommand implements Executable {
                             return 1;
                         }
                     }
-                    commandManager.executeCommand(command[0].toLowerCase(), newArgs);
+                    commandManager.executeCommand(command[0].toLowerCase(), newArgs, scannerManager);
                 } catch (NoSuchElementException e) {
                     return 0;
                 }
