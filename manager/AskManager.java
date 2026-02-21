@@ -5,15 +5,31 @@ import utility.EnumNames;
 
 import java.math.BigInteger;
 
+/**
+ * Class for querying different types of data.
+ *
+ */
 public class AskManager {
 
     private ScannerManager scannerManager;
     private PrinterManager printerManager = new PrinterManager();
 
+    /**
+     * Class constructor
+     *
+     * @param scannerManager object of scanner manager.
+     */
     public AskManager(ScannerManager scannerManager) {
         this.scannerManager = scannerManager;
     }
 
+    /**
+     * String asking method
+     *
+     * @param fieldName required field name
+     * @param restrictions restrictions to print
+     * @return String object that is result of asking (null if input is empty).
+     */
     public String askString(String fieldName, String restrictions) {
         printerManager.println("Enter " + fieldName + " " + restrictions + ": ");
         printerManager.print(">>> ");
@@ -25,6 +41,14 @@ public class AskManager {
         }
     }
 
+    /**
+     * Any Enum class asking method
+     *
+     * @param enumClass instance of Enum class that is asking
+     * @param restrictions restrictions to print
+     * @return one of Enum constants if input is correct and null if empty
+     * @param <T> Enum class
+     */
     public <T extends Enum<T>> T askEnum (Class<T> enumClass, String restrictions) {
         while (true) {
             printerManager.println("Enter one of possible values: " + EnumNames.names(enumClass) + ", you may write upper either lower case letters " + restrictions + ":");
@@ -42,6 +66,13 @@ public class AskManager {
         }
     }
 
+    /**
+     * Long asking method
+     *
+     * @param fieldName required field name
+     * @param restrictions restrictions to print
+     * @return Long object that is result of asking (null if input is empty).
+     */
     public Long askLong(String fieldName, String restrictions) {
         while (true) {
             printerManager.println("Enter " + fieldName + " " + restrictions + ":");
@@ -67,6 +98,13 @@ public class AskManager {
         }
     }
 
+    /**
+     * Integer asking method
+     *
+     * @param fieldName required field name
+     * @param restrictions restrictions to print
+     * @return Integer object that is result of asking (null if input is empty).
+     */
     public Integer askInteger(String fieldName, String restrictions) {
         while (true) {
             printerManager.println("Enter " + fieldName + " " + restrictions + ":");
@@ -92,6 +130,13 @@ public class AskManager {
         }
     }
 
+    /**
+     * Double asking method
+     *
+     * @param fieldName required field name
+     * @param restrictions restrictions to print
+     * @return Double object that is result of asking (null if input is empty).
+     */
     public Double askDouble(String fieldName, String restrictions) {
         while (true) {
             printerManager.println("Enter " + fieldName + " " + restrictions + ":");
@@ -113,6 +158,13 @@ public class AskManager {
         }
     }
 
+    /**
+     * Float asking method
+     *
+     * @param fieldName required field name
+     * @param restrictions restrictions to print
+     * @return Float object that is result of asking (null if input is empty).
+     */
     public Float askFloat(String fieldName, String restrictions) {
         while (true) {
             printerManager.println("Enter " + fieldName + " " + restrictions + ":");
