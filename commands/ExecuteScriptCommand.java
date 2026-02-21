@@ -40,10 +40,6 @@ public class ExecuteScriptCommand implements Executable {
             return 1;
         }
         try {
-            if (StackManager.isRecursive(file)) {
-                printerManager.printErr("Recursion was occurred with file " + fileName + "!");
-                return 1;
-            }
             StackManager.pushToStack(file);
             ScannerManager scannerManager = new ScannerManager(new Scanner(file));
             while (true) {
@@ -54,6 +50,14 @@ public class ExecuteScriptCommand implements Executable {
                         continue;
                     }
                     String[] newArgs = Arrays.copyOfRange(command, 1, command.length);
+                    if (command[0].equalsIgnoreCase("execute_script") &&
+                            newArgs.length == 1) {
+                        File newFile = new File(newArgs[0]);
+                        if (file.exists() && file.canRead() && StackManager.isRecursive(newFile)) {
+                            printerManager.printErr("Recursion was occurred with file " + fileName + "!");
+                            return 1;
+                        }
+                    }
                     commandManager.executeCommand(command[0].toLowerCase(), newArgs);
                 } catch (NoSuchElementException e) {
                     return 0;
