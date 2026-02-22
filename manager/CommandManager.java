@@ -32,6 +32,7 @@ public class CommandManager {
         Executable command = commands.get(commandName);
         if (command == null) {
             printerManager.printErr("That command doesn't exist!");
+            return;
         }
         if (!(command instanceof ScannerUsing)) {
             this.executeCommand(commandName, args);
