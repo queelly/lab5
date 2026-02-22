@@ -65,31 +65,6 @@ public class WorkerFromArrayStringFormatter {
             status = null;
         }
         String organizationString = arr[8].trim();
-        if (organizationString.startsWith("Organization{") && organizationString.endsWith("}") && organizationString.contains(";")) {
-            try {
-                organizationString = organizationString.substring(13, organizationString.length() - 1);
-                Double annualTurnover = 0.;
-                String annualTurnoverString = organizationString.split(";")[0];
-                if (annualTurnoverString.startsWith("annualTurnover=")) {
-                    try {
-                        annualTurnover = Double.parseDouble(annualTurnoverString.substring(15));
-                    } catch (NumberFormatException e) {
-                        annualTurnover = null;
-                    }
-                }
-                Integer employeesCount = 0;
-                String employeesCountString = organizationString.split(";")[1];
-                if (employeesCountString.startsWith("employeesCount=")) {
-                    try {
-                        employeesCount = Integer.parseInt(employeesCountString.substring(15));
-                    } catch (NumberFormatException e) {
-                        employeesCount = null;
-                    }
-                }
-                organization = new Organization(annualTurnover, employeesCount);
-            } catch (RuntimeException e) {
-            }
-        }
         Double annualTurnover = null;
         try {
             annualTurnover = Double.parseDouble(arr[8]);

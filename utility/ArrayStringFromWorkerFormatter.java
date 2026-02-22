@@ -20,6 +20,7 @@ public class ArrayStringFromWorkerFormatter {
             worker.getOrganization() != null ? worker.getOrganization().toString()
                     .replace("Organization{annualTurnover=", "").split(";")[0] : "null",
                 worker.getOrganization() != null ? worker.getOrganization().toString()
+                    .replace("employeesCount=", "")
                     .replace("}", "").split(";")[1] : "null"
         };
     }
