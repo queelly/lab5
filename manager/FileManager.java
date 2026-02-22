@@ -92,7 +92,7 @@ public class FileManager {
             }
         } catch (IOException e) {
             printerManager.printErr("can't read file: " + e.getMessage());
-            return null;
+            return collection;
         }
         return collection;
     }

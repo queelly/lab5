@@ -40,7 +40,7 @@ public class RuntimeManager {
 
     public void interactiveMode() {
         List<Worker> workerList = fileManager.loadCollectionFromCSV();
-        for (Worker worker : fileManager.loadCollectionFromCSV()) {
+        for (Worker worker : workerList) {
             collectionManager.add(worker);
         }
         printerManager.println("Welcome to professional DataBase manager powered by ITMO University!");
