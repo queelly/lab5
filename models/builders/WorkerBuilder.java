@@ -1,12 +1,10 @@
 package models.builders;
 
-import manager.AskManager;
-import manager.IdManager;
-import manager.PrinterManager;
-import manager.ScannerManager;
+import manager.*;
 import models.Position;
 import models.Status;
 import models.Worker;
+import utility.EnumNames;
 
 import java.time.LocalDateTime;
 
@@ -26,29 +24,43 @@ public class WorkerBuilder extends Builder<Worker> {
             printerManager.println("Enter some information about Worker:");
             Worker worker = new Worker(
                 IdManager.generateId(),
-                askManager.askString(
+                askManager.askArgument(
                     "Name",
                     "(not empty)",
-                    false
+                    null,
+                    null,
+                    false,
+                    ParserManager.parseString
                 ),
                 new CoordinatesBuilder(scannerManager).build(),
                 LocalDateTime.now(),
-                askManager.askDouble(
+                askManager.askArgument(
                     "Salary",
                     "(greater than 0 or empty)",
                     0.0,
-                    Double.MAX_VALUE,
-                    true
+                    Double.MAX_VALUE - 1,
+                    true,
+                    ParserManager.parseDouble
                 ),
-                askManager.askEnum(
-                    Position.class,
-                    "(may be empty)",
-                    true
+                askManager.askArgument(
+                    "Position",
+                    "(enter one of possible values: " +
+                        EnumNames.names(Position.class) +
+                        ", you may write upper either lower case letters (may be empty))",
+                    null,
+                    null,
+                    true,
+                    ParserManager.parseEnum(Position.class)
                 ),
-                askManager.askEnum(
-                    Status.class,
-                    "(not empty)",
-                    false
+                askManager.askArgument(
+                    "Status",
+                    "(enter one of possible values: " +
+                        EnumNames.names(Status.class) +
+                        ", you may write upper either lower case letters (not empty))",
+                    null,
+                    null,
+                    false,
+                    ParserManager.parseEnum(Status.class)
                 ),
                 new OrganizationBuilder(scannerManager).build()
             );

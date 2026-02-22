@@ -2,6 +2,7 @@ package commands;
 
 import manager.PrinterManager;
 import manager.RuntimeManager;
+import manager.StackManager;
 
 public class ExitCommand implements Executable {
 
@@ -15,6 +16,7 @@ public class ExitCommand implements Executable {
         }
         printerManager.println("Shutting down the Program!");
         RuntimeManager.setSaveBeforeExit(false);
+        StackManager.clearCommandSet();
         System.exit(0);
         return 0;
     }

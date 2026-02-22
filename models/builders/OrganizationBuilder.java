@@ -1,6 +1,7 @@
 package models.builders;
 
 import manager.AskManager;
+import manager.ParserManager;
 import manager.PrinterManager;
 import manager.ScannerManager;
 import models.Organization;
@@ -19,19 +20,21 @@ public class OrganizationBuilder extends Builder<Organization>{
         while (true) {
             printerManager.println("Enter some information about Organization:");
             Organization organization = new Organization(
-                askManager.askDouble(
+                askManager.askArgument(
                     "Annual turnover",
                     "(greater than 0 or empty)",
-                        0.0,
-                        Double.MAX_VALUE,
-                        true
+                    0.0,
+                    Double.MAX_VALUE - 1,
+                    true,
+                    ParserManager.parseDouble
                 ),
-                askManager.askInteger(
+                askManager.askArgument(
                     "Employees count",
                     "(greater than 0 or empty)",
                     0,
-                    Integer.MAX_VALUE,
-                    true
+                    Integer.MAX_VALUE - 1,
+                    true,
+                    ParserManager.parseInteger
                 )
             );
             if (organization.isValid()) {

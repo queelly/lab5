@@ -40,7 +40,7 @@ public class ExecuteScriptCommand implements Executable {
             return 1;
         }
         try {
-            StackManager.pushToStack(file);
+            StackManager.pushFileToStack(file);
             ScannerManager scannerManager = new ScannerManager(new Scanner(file));
             while (scannerManager.hasNext()) {
                 try {
@@ -67,7 +67,7 @@ public class ExecuteScriptCommand implements Executable {
             printerManager.printErr("File " + fileName + " doesn't exist!");
             return 1;
         } finally {
-            StackManager.popFromStack();
+            StackManager.popFileFromStack();
         }
         return 0;
     }

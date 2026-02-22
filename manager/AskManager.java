@@ -4,6 +4,7 @@ import models.Coordinates;
 import utility.EnumNames;
 
 import java.math.BigInteger;
+import java.util.function.Function;
 
 /**
  * Class for querying different types of data.
@@ -13,6 +14,7 @@ public class AskManager {
 
     private ScannerManager scannerManager;
     private PrinterManager printerManager = new PrinterManager();
+    private boolean working = true;
 
     /**
      * Class constructor
@@ -23,6 +25,42 @@ public class AskManager {
         this.scannerManager = scannerManager;
     }
 
+    public void stopWorking() {
+        working = false;
+    }
+
+    public <T extends Comparable<T>> T askArgument(String fieldName, String restrictions, T minValue, T maxValue, boolean canBeNull, Function<String, T> parse) {
+        while (working) {
+            printerManager.println("Enter " + fieldName + " " + restrictions + ": ");
+            printerManager.print(">>> ");
+            String inputLine = scannerManager.readLine().trim();
+            if (inputLine.isEmpty()) {
+                if (canBeNull) {
+                    return null;
+                } else {
+                    printerManager.printErr("Value can't be null! Please, try again.");
+                }
+            } else {
+                T parsedArgument = parse.apply(inputLine);
+                if (parsedArgument == null) {
+                    printerManager.printErr("Wrong input format! Please, try again.");
+                } else {
+                    if (minValue != null && parsedArgument.compareTo(minValue) < 0) {
+                        printerManager.printErr("Your value is too small so it was set to " + minValue);
+                        return minValue;
+                    } else if (maxValue != null && parsedArgument.compareTo(maxValue) > 0) {
+                        printerManager.printErr("Your value is too large so it was set to " + maxValue);
+                        return maxValue;
+                    } else {
+                        return parsedArgument;
+                    }
+                }
+            }
+        }
+        printerManager.println("Asking was stopped cause of shutting down the Program!");
+        return null;
+    }
+
     /**
      * String asking method
      *
@@ -31,7 +69,7 @@ public class AskManager {
      * @return String object that is result of asking (null if input is empty).
      */
     public String askString(String fieldName, String restrictions, boolean canBeNull) {
-        while (true) {
+        while (working) {
             printerManager.println("Enter " + fieldName + " " + restrictions + ": ");
             printerManager.print(">>> ");
             String inputLine = scannerManager.readLine().trim();
@@ -44,6 +82,8 @@ public class AskManager {
                 printerManager.printErr("Value can't be null! Please, try again.");
             }
         }
+        printerManager.println("Asking was stopped cause of shutting down the Program!");
+        return "";
     }
 
     /**

@@ -1,6 +1,7 @@
 package models.builders;
 
 import manager.AskManager;
+import manager.ParserManager;
 import manager.PrinterManager;
 import manager.ScannerManager;
 import models.Coordinates;
@@ -21,19 +22,21 @@ public class CoordinatesBuilder extends Builder<Coordinates> {
         AskManager askManager = new AskManager(scannerManager);
         while (true) {
             printerManager.println("Enter the Coordinates:");
-            x = askManager.askFloat(
+            x = askManager.askArgument(
                 "X coordinate",
                 "(maximal value is 592, not empty)",
-                    -Float.MIN_VALUE,
-                    592.0F,
-                    false
+                -Float.MAX_VALUE + 1,
+                592.0F,
+                false,
+                ParserManager.parseFloat
             );
-            y = askManager.askDouble(
+            y = askManager.askArgument(
                 "Y coordinate",
                 "(maximal value is 846, not empty)",
-                    -Double.MIN_VALUE,
-                    846.0,
-                    false
+                -Double.MAX_VALUE + 1,
+                846.0,
+                false,
+                ParserManager.parseDouble
             );
             Coordinates coordinates = new Coordinates(x != null ? x : 0, y);
             if (coordinates.isValid()) {
