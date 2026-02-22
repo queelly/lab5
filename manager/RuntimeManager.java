@@ -67,7 +67,7 @@ public class RuntimeManager {
             } catch (NoSuchElementException e) {
                 return;
             }
-            printerManager.println("Program does not work anymore case of Exit command!");
         }
+        printerManager.println("Program does not work anymore case of Exit command!");
     }
 }
