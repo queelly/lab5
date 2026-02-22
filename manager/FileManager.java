@@ -24,7 +24,7 @@ public class FileManager {
 
     private String escape(String value) {
         if (value == null) return "";
-        return "\"" + value.replace("\"", "\"\"") + "\"";
+        return value.replace("\"", "\"\"").replace(";", "\";\"");
     }
 
     public int writeCollectionToCSV(CollectionManager collectionManager) {
@@ -33,6 +33,7 @@ public class FileManager {
                 writer.write(Arrays.stream(
                         ArrayStringFromWorkerFormatter.ArrayStringFromWorker(worker)
                 ).map(this::escape).collect(Collectors.joining(";")) + "\n");
+
             }
         } catch (IOException e) {
             printerManager.printErr("can't write to file: " + e.getMessage());
@@ -42,8 +43,8 @@ public class FileManager {
         return 0;
     }
 
-    public int loadCollectionFromCSV(CollectionManager collectionManager) {
-        collectionManager.clear();
+    public ArrayList<Worker> loadCollectionFromCSV() {
+        ArrayList<Worker> collection = new ArrayList<>();
         try (
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileName))
         ) {
@@ -77,11 +78,12 @@ public class FileManager {
                     } else if (ch == '\n') {
                         curRow.add(curField.toString());
                         curField = new StringBuilder();
-                        collectionManager.add(
-                            WorkerFromArrayStringFormatter.workerFromArrayString(
-                                    curRow.toArray(new String[] {})
-                            )
+                        Worker workerToAdd = WorkerFromArrayStringFormatter.workerFromArrayString(
+                                curRow.toArray(new String[] {})
                         );
+                        if (workerToAdd != null && workerToAdd.isValid()) {
+                            collection.add(workerToAdd);
+                        }
                         curRow.clear();
                     } else {
                         curField.append(ch);
@@ -90,8 +92,8 @@ public class FileManager {
             }
         } catch (IOException e) {
             printerManager.printErr("can't read file: " + e.getMessage());
-            return -1;
+            return null;
         }
-        return 0;
+        return collection;
     }
 }

@@ -4,12 +4,18 @@ import manager.CollectionManager;
 import manager.PrinterManager;
 import manager.ScannerManager;
 import models.builders.WorkerBuilder;
+import utility.ScannerUsing;
 
-public class AddCommand implements Executable {
+public class AddCommand implements Executable, ScannerUsing {
 
     private ScannerManager scannerManager;
     private PrinterManager printerManager = new PrinterManager();
     private CollectionManager collection;
+
+    @Override
+    public void setScannerManager(ScannerManager scannerManager) {
+        this.scannerManager = scannerManager;
+    }
 
     public AddCommand(CollectionManager collection, ScannerManager scannerManager) {
         this.collection = collection;

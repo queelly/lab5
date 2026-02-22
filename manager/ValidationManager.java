@@ -17,7 +17,7 @@ public class ValidationManager {
             !worker.getName().isEmpty() &&
             worker.getCoordinates() != null &&
             worker.getCreationDate() != null &&
-            (worker.getSalary() == null || worker.getSalary() > 0) &&
+            (worker.getSalary() == null || worker.getSalary() >= 0) &&
             worker.getStatus() != null &&
             worker.getOrganization() != null;
     }
@@ -31,8 +31,8 @@ public class ValidationManager {
 
     public static boolean isValidOrganization(Organization organization) {
         return organization != null &&
-            (organization.getAnnualTurnover() == null || organization.getAnnualTurnover() > 0) &&
-            (organization.getEmployeesCount() == null || organization.getEmployeesCount() > 0);
+            (organization.getAnnualTurnover() == null || organization.getAnnualTurnover() >= 0) &&
+            (organization.getEmployeesCount() == null || organization.getEmployeesCount() >= 0);
     }
 
     public static boolean isValidObject(Validatable o) {

@@ -1,8 +1,11 @@
 package manager;
 
 import commands.ExitCommand;
+import models.Worker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class RuntimeManager {
@@ -31,7 +34,10 @@ public class RuntimeManager {
     }
 
     public void interactiveMode() {
-        fileManager.loadCollectionFromCSV(collectionManager);
+        List<Worker> workerList = fileManager.loadCollectionFromCSV();
+        for (Worker worker : fileManager.loadCollectionFromCSV()) {
+            collectionManager.add(worker);
+        }
         printerManager.println("Welcome to professional DataBase manager powered by ITMO University!");
         printerManager.println("Please, type \"help\" to get help with manager");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

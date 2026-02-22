@@ -9,7 +9,7 @@ import java.time.format.DateTimeParseException;
 public class WorkerFromArrayStringFormatter {
 
     public static Worker workerFromArrayString(String[] arr) {
-        if (arr.length != 8) {
+        if (arr.length != 10) {
             return null;
         }
         Long id = null;
@@ -27,32 +27,26 @@ public class WorkerFromArrayStringFormatter {
         }
         name = arr[1].trim();
         float x = 0;
+        try {
+            x = Float.parseFloat(arr[2]);
+        } catch (NumberFormatException e) {
+        }
         Double y = null;
         try {
-            String xString = arr[2].trim().split(";")[0];
-            if (xString.startsWith("(X=")) {
-                x = Float.parseFloat(xString.substring(3));
-            }
-        } catch (RuntimeException e) {
-        }
-        try {
-            String yString = arr[2].trim().split(";")[1];
-            if (yString.startsWith("Y=") && yString.endsWith(")")) {
-                y = Double.parseDouble(yString.substring(2, yString.length() - 1));
-            }
-        } catch (RuntimeException e) {
+            y = Double.parseDouble(arr[3]);
+        } catch (NumberFormatException e) {
         }
         coordinates = new Coordinates(x, y);
         try {
-            creationDate = LocalDateTime.parse(arr[3].trim(), DateTimeFormatter.ISO_DATE_TIME);
+            creationDate = LocalDateTime.parse(arr[4].trim(), DateTimeFormatter.ISO_DATE_TIME);
         } catch (DateTimeParseException e) {
             creationDate = null;
         }
         try {
-            salary = Double.parseDouble(arr[4].trim());
+            salary = Double.parseDouble(arr[5].trim());
         } catch (NumberFormatException e) {
         }
-        String positionString = arr[5].trim();
+        String positionString = arr[6].trim();
         for (Position value : Position.values()) {
             if (value.toString().equalsIgnoreCase(positionString)) {
                 position = value;
@@ -61,7 +55,7 @@ public class WorkerFromArrayStringFormatter {
         if (positionString.isEmpty() || positionString.equalsIgnoreCase("null")) {
             position = null;
         }
-        String statusString = arr[6].trim();
+        String statusString = arr[7].trim();
         for (Status value : Status.values()) {
             if (value.toString().equalsIgnoreCase(statusString)) {
                 status = value;
@@ -70,7 +64,7 @@ public class WorkerFromArrayStringFormatter {
         if (statusString.isEmpty() || statusString.equalsIgnoreCase("null")) {
             status = null;
         }
-        String organizationString = arr[7].trim();
+        String organizationString = arr[8].trim();
         if (organizationString.startsWith("Organization{") && organizationString.endsWith("}") && organizationString.contains(";")) {
             try {
                 organizationString = organizationString.substring(13, organizationString.length() - 1);
@@ -96,6 +90,17 @@ public class WorkerFromArrayStringFormatter {
             } catch (RuntimeException e) {
             }
         }
+        Double annualTurnover = null;
+        try {
+            annualTurnover = Double.parseDouble(arr[8]);
+        } catch (NumberFormatException e) {
+        }
+        Integer employeesCount = null;
+        try {
+            employeesCount = Integer.parseInt(arr[9]);
+        } catch (NumberFormatException e) {
+        }
+        organization = new Organization(annualTurnover, employeesCount);
         return new Worker(id, name, coordinates, creationDate, salary, position, status, organization);
     }
 }

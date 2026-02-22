@@ -28,21 +28,27 @@ public class WorkerBuilder extends Builder<Worker> {
                 IdManager.generateId(),
                 askManager.askString(
                     "Name",
-                    "(not empty)"
+                    "(not empty)",
+                    false
                 ),
                 new CoordinatesBuilder(scannerManager).build(),
                 LocalDateTime.now(),
                 askManager.askDouble(
                     "Salary",
-                    "(greater than 0 or empty)"
+                    "(greater than 0 or empty)",
+                    0.0,
+                    Double.MAX_VALUE,
+                    true
                 ),
                 askManager.askEnum(
                     Position.class,
-                    "(may be empty)"
+                    "(may be empty)",
+                    true
                 ),
                 askManager.askEnum(
                     Status.class,
-                    "(not empty)"
+                    "(not empty)",
+                    false
                 ),
                 new OrganizationBuilder(scannerManager).build()
             );

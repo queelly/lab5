@@ -42,7 +42,7 @@ public class ExecuteScriptCommand implements Executable {
         try {
             StackManager.pushToStack(file);
             ScannerManager scannerManager = new ScannerManager(new Scanner(file));
-            while (true) {
+            while (scannerManager.hasNext()) {
                 try {
                     String inputLine = scannerManager.readLine();
                     String[] command = inputLine.trim().split("\\s+");
@@ -69,6 +69,7 @@ public class ExecuteScriptCommand implements Executable {
         } finally {
             StackManager.popFromStack();
         }
+        return 0;
     }
 
     @Override

@@ -23,11 +23,17 @@ public class CoordinatesBuilder extends Builder<Coordinates> {
             printerManager.println("Enter the Coordinates:");
             x = askManager.askFloat(
                 "X coordinate",
-                "(maximal value is 592)"
+                "(maximal value is 592, not empty)",
+                    -Float.MIN_VALUE,
+                    592.0F,
+                    false
             );
             y = askManager.askDouble(
                 "Y coordinate",
-                "(maximal value is 846)"
+                "(maximal value is 846, not empty)",
+                    -Double.MIN_VALUE,
+                    846.0,
+                    false
             );
             Coordinates coordinates = new Coordinates(x != null ? x : 0, y);
             if (coordinates.isValid()) {

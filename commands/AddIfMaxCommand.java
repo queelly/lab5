@@ -4,8 +4,9 @@ import manager.CollectionManager;
 import manager.PrinterManager;
 import manager.ScannerManager;
 import models.builders.WorkerBuilder;
+import utility.ScannerUsing;
 
-public class AddIfMaxCommand implements Executable {
+public class AddIfMaxCommand implements Executable, ScannerUsing {
 
     private ScannerManager scannerManager;
     private PrinterManager printerManager = new PrinterManager();
@@ -13,6 +14,11 @@ public class AddIfMaxCommand implements Executable {
 
     public AddIfMaxCommand(CollectionManager collection, ScannerManager scannerManager) {
         this.collection = collection;
+        this.scannerManager = scannerManager;
+    }
+
+    @Override
+    public void setScannerManager(ScannerManager scannerManager) {
         this.scannerManager = scannerManager;
     }
 

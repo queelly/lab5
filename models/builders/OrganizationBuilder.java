@@ -21,11 +21,17 @@ public class OrganizationBuilder extends Builder<Organization>{
             Organization organization = new Organization(
                 askManager.askDouble(
                     "Annual turnover",
-                    "(greater than 0 or empty)"
+                    "(greater than 0 or empty)",
+                        0.0,
+                        Double.MAX_VALUE,
+                        true
                 ),
                 askManager.askInteger(
                     "Employees count",
-                    "(greater than 0 or empty)"
+                    "(greater than 0 or empty)",
+                    0,
+                    Integer.MAX_VALUE,
+                    true
                 )
             );
             if (organization.isValid()) {

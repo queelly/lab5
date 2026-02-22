@@ -4,8 +4,9 @@ import manager.CollectionManager;
 import manager.PrinterManager;
 import manager.ScannerManager;
 import models.builders.WorkerBuilder;
+import utility.ScannerUsing;
 
-public class AddIfMinCommand implements Executable {
+public class AddIfMinCommand implements Executable, ScannerUsing {
 
     private ScannerManager scannerManager;
     PrinterManager printerManager = new PrinterManager();
@@ -13,6 +14,11 @@ public class AddIfMinCommand implements Executable {
 
     public AddIfMinCommand(CollectionManager collection, ScannerManager scannerManager) {
         this.collection = collection;
+        this.scannerManager = scannerManager;
+    }
+
+    @Override
+    public void setScannerManager(ScannerManager scannerManager) {
         this.scannerManager = scannerManager;
     }
 
