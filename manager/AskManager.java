@@ -14,7 +14,7 @@ public class AskManager {
 
     private ScannerManager scannerManager;
     private PrinterManager printerManager = new PrinterManager();
-    private boolean working = true;
+    private Boolean working = true;
 
     /**
      * Class constructor

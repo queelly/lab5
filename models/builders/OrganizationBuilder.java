@@ -10,14 +10,23 @@ public class OrganizationBuilder extends Builder<Organization>{
 
     private ScannerManager scannerManager;
     private final PrinterManager printerManager = new PrinterManager();
+    private AskManager askManager;
+    private boolean working = true;
 
     public OrganizationBuilder(ScannerManager scannerManager) {
         this.scannerManager = scannerManager;
     }
 
+    public void stopWorking() {
+        working = false;
+        if (askManager != null) {
+            askManager.stopWorking();
+        }
+    }
+
     public Organization build() {
-        AskManager askManager = new AskManager(scannerManager);
-        while (true) {
+        askManager = new AskManager(scannerManager);
+        while (working) {
             printerManager.println("Enter some information about Organization:");
             Organization organization = new Organization(
                 askManager.askArgument(
@@ -43,5 +52,7 @@ public class OrganizationBuilder extends Builder<Organization>{
                 printerManager.printErr("Invalid Organization information! Try again. Please, follow restrictions while printing!");
             }
         }
+        printerManager.println("Building was stopped cause of shutting down the Program!");
+        return null;
     }
 }

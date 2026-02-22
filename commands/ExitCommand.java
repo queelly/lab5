@@ -1,5 +1,6 @@
 package commands;
 
+import manager.AskManager;
 import manager.PrinterManager;
 import manager.RuntimeManager;
 import manager.StackManager;
@@ -16,7 +17,7 @@ public class ExitCommand implements Executable {
         }
         printerManager.println("Shutting down the Program!");
         RuntimeManager.setSaveBeforeExit(false);
-        StackManager.clearCommandSet();
+        RuntimeManager.stopWorking();
         System.exit(0);
         return 0;
     }

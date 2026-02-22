@@ -16,6 +16,7 @@ public class RuntimeManager {
     private CollectionManager collectionManager;
     private CommandManager commandManager;
     private static boolean saveBeforeExit = true;
+    private static boolean working = true;
 
     public RuntimeManager(
             ScannerManager scannerManager,
@@ -27,6 +28,10 @@ public class RuntimeManager {
         this.fileManager = fileManager;
         this.collectionManager = collectionManager;
         this.commandManager = commandManager;
+    }
+
+    public static void stopWorking() {
+        working = false;
     }
 
     public static void setSaveBeforeExit(boolean saveBeforeExit) {
@@ -50,7 +55,7 @@ public class RuntimeManager {
                 }
             }
         }));
-        while (true) {
+        while (working) {
             try {
                 String inputLine = scannerManager.readLine();
                 String[] command = inputLine.trim().split("\\s+");
@@ -62,6 +67,7 @@ public class RuntimeManager {
             } catch (NoSuchElementException e) {
                 return;
             }
+            printerManager.println("Program does not work anymore case of Exit command!");
         }
     }
 }

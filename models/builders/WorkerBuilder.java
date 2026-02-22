@@ -12,15 +12,24 @@ public class WorkerBuilder extends Builder<Worker> {
 
     private ScannerManager scannerManager;
     private PrinterManager printerManager = new PrinterManager();
+    private AskManager askManager;
+    private boolean working = true;
 
     public WorkerBuilder(ScannerManager scannerManager) {
         this.scannerManager = scannerManager;
     }
 
+    public void stopWorking() {
+        working = false;
+        if (askManager != null) {
+            askManager.stopWorking();
+        }
+    }
+
     @Override
     public Worker build() {
-        AskManager askManager = new AskManager(scannerManager);
-        while (true) {
+        askManager = new AskManager(scannerManager);
+        while (working) {
             printerManager.println("Enter some information about Worker:");
             Worker worker = new Worker(
                 IdManager.generateId(),
@@ -70,6 +79,7 @@ public class WorkerBuilder extends Builder<Worker> {
                 printerManager.printErr("Invalid Worker information! Try again. Please, follow restrictions while printing!");
             }
         }
-
+        printerManager.println("Building was stopped cause of shutting down the Program!");
+        return null;
     }
 }
