@@ -45,6 +45,7 @@ public class FileManager {
 
     public ArrayList<Worker> loadCollectionFromCSV() {
         ArrayList<Worker> collection = new ArrayList<>();
+        Set<Long> usedIds = new HashSet<>();
         try (
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(fileName))
         ) {
@@ -81,8 +82,9 @@ public class FileManager {
                         Worker workerToAdd = WorkerFromArrayStringFormatter.workerFromArrayString(
                                 curRow.toArray(new String[] {})
                         );
-                        if (workerToAdd != null && workerToAdd.isValid()) {
+                        if (workerToAdd != null && workerToAdd.isValid() && !usedIds.contains(workerToAdd.getId())) {
                             collection.add(workerToAdd);
+                            usedIds.add(workerToAdd.getId());
                         }
                         curRow.clear();
                     } else {
