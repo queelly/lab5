@@ -64,6 +64,7 @@ public class WorkerFromArrayStringFormatter {
         if (statusString.isEmpty() || statusString.equalsIgnoreCase("null")) {
             status = null;
         }
+
         String organizationString = arr[8].trim();
         Double annualTurnover = null;
         try {
